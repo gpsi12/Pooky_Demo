@@ -54,7 +54,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             @Override
             public void onPageSelected(int position) {
                 Toast.makeText(mContext, position + "", Toast.LENGTH_SHORT).show();
-
+                //
             }
 
             @Override
