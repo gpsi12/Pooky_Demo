@@ -36,7 +36,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         mContext = this;
         initView();
 
-        initSlidingMenu(savedInstanceState);
         FragmentPagerItems pagerItems = new FragmentPagerItems(this);
         pagerItems.add(FragmentPagerItem.of("首页", IndexFragment.class));
         pagerItems.add(FragmentPagerItem.of("分类", ClassifyFragment.class));
@@ -66,14 +65,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     }
 
-    /**
-     * 初始化侧滑菜单
-     *
-     * @param savedInstanceState
-     */
-    private void initSlidingMenu(Bundle savedInstanceState) {
-
-    }
 
     private void initView() {
         mViewPager = (ViewPager) findViewById(R.id.viewpager);
