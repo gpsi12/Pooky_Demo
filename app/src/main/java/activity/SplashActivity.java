@@ -14,7 +14,7 @@ import com.pooky.demo.R;
  */
 
 public class SplashActivity extends Activity {
-    private final int SPLASH_DISPLAY_LENGHT = 3000;
+    private final int SPLASH_DISPLAY_LENGHT = 2000;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
