@@ -8,20 +8,32 @@
         android:id="@+id/bar"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@color/clorBarBack"
-        android:gravity="center">
+        android:background="@color/clorBarBack">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/clorBarText"
+            android:layout_centerInParent="true"
             android:text="个人中心"
+            android:textColor="@color/clorBarText"
             android:textSize="18sp" />
+
+        <ImageView
+            android:id="@+id/me_iv_share"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
+            android:src="@mipmap/share" />
+
     </RelativeLayout>
 
     <widget.BounceScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
         android:layout_below="@id/bar">
 
         <LinearLayout
@@ -32,34 +44,33 @@
 
             <RelativeLayout
                 android:id="@+id/me_ll_qq_qun"
-                android:background="#CDCDCD"
                 android:layout_width="match_parent"
-                android:layout_height="50dp">
+                android:layout_height="50dp"
+                android:background="#CDCDCD">
 
                 <ImageView
                     android:id="@+id/ll_iv_qqun"
-                    android:paddingLeft="20dp"
-                    android:paddingRight="20dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:src="@mipmap/qq_qun"/>
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:src="@mipmap/qq_qun" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
                     android:layout_toRightOf="@id/ll_iv_qqun"
-                    android:text="企鹅群"
-                    android:layout_centerVertical="true"/>
+                    android:text="企鹅群" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingRight="20dp"
-                    android:layout_centerVertical="true"
                     android:layout_alignParentRight="true"
-                    android:src="@mipmap/arrow"
-                    />
+                    android:layout_centerVertical="true"
+                    android:paddingRight="20dp"
+                    android:src="@mipmap/arrow" />
 
             </RelativeLayout>
 

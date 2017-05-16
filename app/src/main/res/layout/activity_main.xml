@@ -4,7 +4,6 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginBottom="5dp"
     tools:context="com.pooky.demo.MainActivity">
 
     <widget.NoScrollViewPager
