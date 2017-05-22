@@ -43,7 +43,7 @@
             android:layout_height="match_parent"
             android:gravity="center_vertical"
             android:orientation="vertical">
-
+<!-- QQ群 -->
             <RelativeLayout
                 android:id="@+id/me_ll_qq_qun"
                 android:layout_width="match_parent"
@@ -65,6 +65,39 @@
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@id/ll_iv_qqun"
                     android:text="企鹅群" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:paddingRight="20dp"
+                    android:src="@mipmap/arrow" />
+
+            </RelativeLayout>
+
+<!-- 服务 -->
+            <RelativeLayout
+                android:id="@+id/me_ll_service"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="#CDCDCD">
+
+                <ImageView
+                    android:id="@+id/ll_iv_service"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:src="@mipmap/qq_qun" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/ll_iv_service"
+                    android:text="服务" />
 
                 <ImageView
                     android:layout_width="wrap_content"

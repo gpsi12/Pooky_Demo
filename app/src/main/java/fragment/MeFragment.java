@@ -1,5 +1,6 @@
 package fragment;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v4.app.Fragment;
@@ -15,6 +16,9 @@ import android.widget.Toast;
 
 import com.pooky.demo.R;
 
+import service.ScreenReceiver;
+import service.ScreenService;
+
 /**
  * 类描述：我的
  * Created by Gpsi on 2017-04-12.
@@ -23,7 +27,9 @@ import com.pooky.demo.R;
 public class MeFragment extends Fragment {
 
     private RelativeLayout me_qq_qun;
+    private RelativeLayout me_ll_service;
     private ImageView me_iv_share;
+
 
     @Nullable
     @Override
@@ -37,11 +43,12 @@ public class MeFragment extends Fragment {
                 Boolean isSucceed = joinQQGroup("hJtmRITn9VadK7CsvpXYWv68n7OrMbcW");
             }
         });
-        me_iv_share = (ImageView) view.findViewById(R.id.me_iv_share);
-        me_iv_share.setOnClickListener(new View.OnClickListener() {
+        me_ll_service = (RelativeLayout) view.findViewById(R.id.me_ll_service);
+        me_ll_service.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent service = new Intent(getActivity(), ScreenService.class);
+                getActivity().startService(service);
             }
         });
         return view;
@@ -71,3 +78,31 @@ public class MeFragment extends Fragment {
     }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
