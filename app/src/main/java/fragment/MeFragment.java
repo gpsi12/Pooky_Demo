@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -22,6 +23,7 @@ import com.pooky.demo.R;
 public class MeFragment extends Fragment {
 
     private RelativeLayout me_qq_qun;
+    private ImageView me_iv_share;
 
     @Nullable
     @Override
@@ -33,6 +35,13 @@ public class MeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Boolean isSucceed = joinQQGroup("hJtmRITn9VadK7CsvpXYWv68n7OrMbcW");
+            }
+        });
+        me_iv_share = (ImageView) view.findViewById(R.id.me_iv_share);
+        me_iv_share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
             }
         });
         return view;
