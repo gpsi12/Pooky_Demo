@@ -8,9 +8,9 @@
         android:id="@+id/bar"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@color/clorBarBack"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true">
+        android:background="@color/clorBarBack">
 
         <TextView
             android:layout_width="wrap_content"
@@ -43,7 +43,7 @@
             android:layout_height="match_parent"
             android:gravity="center_vertical"
             android:orientation="vertical">
-<!-- QQ群 -->
+            <!-- QQ群 -->
             <RelativeLayout
                 android:id="@+id/me_ll_qq_qun"
                 android:layout_width="match_parent"
@@ -75,11 +75,12 @@
                     android:src="@mipmap/arrow" />
 
             </RelativeLayout>
+
             <View
                 android:layout_width="match_parent"
-                android:layout_height="2dp"/>
+                android:layout_height="2dp" />
 
-<!-- 服务 -->
+            <!-- 服务 -->
             <RelativeLayout
                 android:id="@+id/me_ll_service"
                 android:layout_width="match_parent"
@@ -110,13 +111,25 @@
                     android:paddingRight="20dp"
                     android:src="@mipmap/arrow" />
 
+                <ProgressBar
+                    android:id="@+id/me_pb_donw"
+                    style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"
+                    android:visibility="visible"
+                    android:layout_alignParentBottom="true"
+                    android:max="100"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:progress="0" />
+
             </RelativeLayout>
+
 
         </LinearLayout>
 
 
     </widget.BounceScrollView>
-
 
 
 </RelativeLayout>

@@ -79,7 +79,7 @@
 		3）使用Handler处理子线程结果，而不是Thread.wait()或者Thread.sleep来
 		4）Activity的onCreate和onResume回调中尽量避免耗时操作的代码
 		5）BroadcastReceiver中onReceive代码也要尽量避免耗时操作，建议使用IntentService处理，IS是一个异步的，会自动停止服务，很好的解决了传统的Service中处理耗时操作忘记停止并销毁Service的问题
-十七.如何使用JNI
+# 十七.如何使用JNI #
 	1.在JAVA中生命native 方法如private native String printJNI(String inputStr);
 	2.使用javah工具生成.h头文件，文件中就会自动生成对应的函数JNIEXPORT jstring JNICALLJava_com_wenming_HelloWorld_printJNI 
 	3.实现JNI原生函数源文件，新建HelloWord.c文件，对刚才自动生成的函数进行具体的逻辑书写，例如返回一个Java叫做HelloWord的字符串，

@@ -16,7 +16,11 @@
         </activity>
 
         <activity android:name="activity.MainActivity"/>
-        <service android:name="service.ScreenService"/>
+        <service android:name="service.ScreenService">
+            <intent-filter>
+                <action android:name="com.pooky.demo.MSG_ACTION"/>
+            </intent-filter>
+        </service>
 
     </application>
 

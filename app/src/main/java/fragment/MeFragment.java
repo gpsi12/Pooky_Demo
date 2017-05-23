@@ -1,19 +1,24 @@
 package fragment;
 
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.pooky.demo.R;
 
+import service.OnProgressListener;
 import service.ScreenService;
 
 /**
@@ -27,11 +32,17 @@ public class MeFragment extends Fragment {
     private RelativeLayout me_ll_service;
     private ImageView me_iv_share;
 
+    private ScreenService screenService;
+    private ProgressBar mProgressBar;
+
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_me, null);
+
+        Intent intent = new Intent(getContext(),ScreenService.class);
+        getActivity().bindService(intent,connection,getActivity().BIND_AUTO_CREATE);
 
         me_qq_qun = (RelativeLayout) view.findViewById(R.id.me_ll_qq_qun);
         me_qq_qun.setOnClickListener(new View.OnClickListener() {
@@ -40,12 +51,16 @@ public class MeFragment extends Fragment {
                 Boolean isSucceed = joinQQGroup("hJtmRITn9VadK7CsvpXYWv68n7OrMbcW");
             }
         });
+        mProgressBar = (ProgressBar) view.findViewById(R.id.me_pb_donw);
         me_ll_service = (RelativeLayout) view.findViewById(R.id.me_ll_service);
         me_ll_service.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent service = new Intent(getContext(), ScreenService.class);
-                getActivity().startService(service);
+//                Intent service = new Intent(getContext(), ScreenService.class);
+//                getActivity().startService(service);
+//                Intent intent = new Intent("com.pooky.demo.MSG_ACTION");
+
+                screenService.startDownLoad();
             }
         });
         return view;
@@ -74,32 +89,29 @@ public class MeFragment extends Fragment {
         }
     }
 
+    ServiceConnection connection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName componentName, IBinder service) {
+            //返回一个ScreenService对象
+            screenService = ((ScreenService.MsgBinder)service).getSService();
+            //注册回调接口来接受下载进度变化
+            screenService.setOnProgressListener(new OnProgressListener() {
+                @Override
+                public void onProgress(int progress) {
+                    mProgressBar.setProgress(progress);
+                }
+            });
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName componentName) {
+
+        }
+    };
+
+    @Override
+    public void onDestroy() {
+        getActivity().unbindService(connection);
+        super.onDestroy();
+    }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
