@@ -48,4 +48,34 @@
 			3/如果该View是View Group，则调用dispatchDeaw()方法绘制子视图
 			4/绘制滚动条
 # 十.数据持久化的四种方式 #
-	
+	1.文件储存：通过java.io.FileInputStream和java.io.FileOutputStream这两个类来实现对文件的对象。
+	2.SharedPreferences：是一种轻量级的数据存储机制，他将一些简单的数据类型的数据，包括boolean类型，int类型，float类型，long类型以及String类型的数据，以键值对的形式存储在应用程序的私有Preferences目录（/data/data/<包名>/shared_prefs/）中，这种Preferences机制广泛应用于存储应用程序中的配置信息。
+	3.SQLite数据库：当应用程序需要处理的数据量比较大时，为了更加合理的处理、管理、查询数据，我们往往使用关系数据库储存数据。Android中如联系人】、通话记录、短信等，都是存储在SQLite数据库中。
+	4.ContentProvider：主要用于在不同的应用程序之间实现数据共享的功能，不同于SP和文件存储中的两种全局可读写的操作模式，内容提供其可以选择之对那一部分数据进行共享，而办证我们程序中的隐私数据不会被泄露。
+# 十一.Async task系列 #
+	十二.为什么要设计为只能够一次任务？
+		最核心的还是线程安全的问题，多个子线程同事运行，会产生状态不一致的问题，所以要务必保证只能运行一次。
+	十三.AsyncTask造成的内存泄露问题怎么解决？
+		比如非静态内部类AsyncTask会隐式地持有外部类的引用，如果气生命周期大于外部activity的生命周期，就会出现内存泄露。
+		1.注意要复写AsyncTask的onCancel方法，吧里面的socket，file等，该关掉的及时关掉
+		2.在Activity的onDestory()方法中调用Asynctask.cancel方法。
+		3.Asynctask内部使用弱引用的方式来持有Activity。
+	十四.若Activity已被销毁，此时AsyncTask执行完毕并返回结果，会报异常么？
+		答：当一个App旋转时，整个Activity会被销毁和重建，当Activity重启时，AsyncTask中对该Activity的引用是无效的，因此onPostExecute()就不会起作用，若这是正在执行就回报出view not attached to window manage异常，同样也是生命周期的问题，在Activity的onDestory()中调用Asynctask.cancel方法，让二者的生命周期同步。
+	十五.Activity销毁但Task如果没有销毁掉，当Activity重启时这个AsyncTask该如何解决？
+		在重建Activity的时候，会回调Activity.onRetainNonConfigurationInstance()重新创建一个新的对象给AsyncTask，完成引用的更新。
+# 十六.ANR系列 #
+	1.什么是ANR？
+		ANR全称是Application Not Responding，意为程序未响应，程序无法响应用户的输入，系统会弹出一个ANR对话框，用户选择继续等待还是停止当前程序。
+		1）应用在5s内未相应用户的输入事件
+		2）BroadcastReceiver未在10s内完成相应的处理。
+	2.怎么引起的？
+		1）主线程中存在耗时操作
+		2）主线程中错误的操作，例如Thread.wait或Thread.sleepp等
+	3.如何避免ANR为题？
+		基本思路就是把一些耗时操作放在子线程中处理
+		1）使用Async Task处理耗时IO操作
+		2）降低子线程优先级使用Thread火HandlerThread，调用Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND)设置优先级，否则仍然会降低程序响应，因为默认Thread的优先级和主线程相同。
+		3）使用Handler处理子线程结果，而不是Thread.wait()或者Thread.sleep来
+		4）Activity的onCreate和onResume回调中尽量避免耗时操作的代码
+		5）BroadcastReceiver中onReceive代码也要尽量避免耗时操作，建议使用IntentService处理，IS是一个异步的，会自动停止服务，很好的解决了传统的Service中处理耗时操作忘记停止并销毁Service的问题
