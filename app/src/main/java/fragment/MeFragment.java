@@ -3,6 +3,8 @@ package fragment;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.graphics.drawable.AnimationDrawable;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -12,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -30,10 +33,13 @@ public class MeFragment extends Fragment {
 
     private RelativeLayout me_qq_qun;
     private RelativeLayout me_ll_service;
+    private LinearLayout me_ll_anim;
     private ImageView me_iv_share;
+    private ImageView me_iv_d_anim;
 
     private ScreenService screenService;
     private ProgressBar mProgressBar;
+    private AnimationDrawable animationDrawable;
 
 
     @Nullable
@@ -63,6 +69,17 @@ public class MeFragment extends Fragment {
                 screenService.startDownLoad();
             }
         });
+        me_iv_d_anim = (ImageView) view.findViewById(R.id.me_iv_d_anim);
+//        me_ll_anim = (LinearLayout) view.findViewById(R.id.me_ll_anim);
+        me_iv_d_anim.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                me_iv_d_anim.setImageResource(R.drawable.animation_list);
+                animationDrawable = (AnimationDrawable) me_iv_d_anim.getDrawable();
+                animationDrawable.start();
+            }
+        });
+
         return view;
 
     }
@@ -99,6 +116,7 @@ public class MeFragment extends Fragment {
                 @Override
                 public void onProgress(int progress) {
                     mProgressBar.setProgress(progress);
+
                 }
             });
         }

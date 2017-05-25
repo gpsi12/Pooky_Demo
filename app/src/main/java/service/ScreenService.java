@@ -8,7 +8,7 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 
 /**
- * 类描述：
+ * 类描述：服务
  * Created by Gpsi on 2017-05-22.
  */
 
@@ -62,7 +62,6 @@ public class ScreenService extends Service {
     public IBinder onBind(Intent intent) {
         return new MsgBinder();
     }
-
 
     public class MsgBinder extends Binder {
        /**

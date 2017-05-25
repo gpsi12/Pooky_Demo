@@ -122,8 +122,62 @@
                     android:paddingLeft="20dp"
                     android:paddingRight="20dp"
                     android:progress="0" />
-
             </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp" />
+
+<!-- 动画 -->
+            <LinearLayout
+                android:id="@+id/me_ll_anim"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal"
+                android:background="#CDCDCD">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:src="@mipmap/animation" />
+
+                <ImageView
+                    android:id="@+id/me_iv_d_anim"
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:src="@mipmap/default_pooky"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    />
+                <ImageView
+                    android:id="@+id/me_iv_t_anim"
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/default_pooky"
+                    android:layout_weight="1"
+                    />
+                <ImageView
+                    android:id="@+id/me_iv_p_anim"
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:src="@mipmap/default_pooky"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_gravity="center_vertical"
+                    android:paddingRight="20dp"
+                    android:src="@mipmap/arrow" />
+
+            </LinearLayout>
+
 
 
         </LinearLayout>

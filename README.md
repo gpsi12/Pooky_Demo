@@ -92,4 +92,37 @@
 		赋予值
 		char*tmpstr = "return string succeeded";
 		jstring resrt = env->NewStringUTF(tmpstr);
-十八.
+# 十八.怎么避免OOM问题的出现 #
+	1.使用更加轻量级的数据结构
+		例如我们可以考虑使用ArrayMap/SparseArray而不是HashMap等传统数据结构，SparseArray更加高效，在于它避免了对Key与Value的自动装箱。
+	2.避免在Android中使用枚举
+	3.Bitmap对象的内存占用和复用
+		1）加载到内存之前先计算出一个合适的比例，避免不必要的大图载入
+		2）编码格式
+	4.使用更小的图片，资源图片是否有压缩的控件
+	5.StringBuilder 有的时候，代码中会需要使用大量的字符串拼接，可以考虑使用StringBuilder来代替背反的 + 
+	6.避免在onDraw()里面执行对象的创建，类似onDraw()等频繁调用的方法，一定要注意避免在这里做创建对象的操作，它会迅速增加内存的使用，容易引起频繁的CG，甚至内存抖动
+# 十九.Handler内存泄露 #
+	1.Handler作为内部类存在于Activity中，但是Handler的生命周期与Activity的生命周期往往不相同，比如当Handler对象有Message在排队，则无法释放，进而造成本该释放的Activity也无法释放
+	2.解决方法：handler为static类，这样内部类就不在只有外部类的引用了，就不会阻塞Activity的释放，如果内部类实在需要用到外部类的对象，可在其内部类声明一个弱引用的外部类，在Activity onStop或者onDestroy的时候，取消该Handler对象的Message和Runnable
+	3.一些不良的代码习惯：有些代码并不会造成内存泄露，但是他们的资源没有得到重用，频繁的申请和销毁内存，消耗Cpu资源的同时引起内存抖动
+	解决办法：如果需要频繁的申请内存对象和释放对象，可以考虑使用对象池来增加对象的复用，例如ListView变采用这种思想，通过复用Converevview来避免频繁的CG
+# 二十.Android中的几种布局 #
+	1.FrameLayout(框架布局)：
+		五种布局中最简单的布局，ANdroid中并没有对chid view的布局进行控制，布局中的所有控件对默认出现在师徒的左上角
+	2.LinearLayout(线性布局)：
+		一行活一列以控制一个控件的线性布局，所以当有很多控件需要在一个界面中列出时，可以在LinearLayout布局，需要注意的属性，orientation
+	3.AbsoluteLayout(绝对布局)
+		可以放置多个控件，并且可以自定义控件的xy位置
+	4.RelativeLayout(相对布局)
+		这个也是相对自由的布局，Android对改布局的child view的水平lauout-垂直layout做了解析，由此我们可以在FrameLayout的基础上使用标签或者Java代码对方向，布局中的views进行任意的控制
+	5.TableLayout(表格布局)
+		将子元素的位置分配到行或列中，一个TableLayout由许多的TableRow组成
+# 二十一.Activity的生命周期 #
+	1.启动Activity：onCreate() --> onStart() --> onResume(),Activity进入运行状态
+	2.Activity退居后台：当前Activity转到新的Activity界面或者按下Home健回到主屏：onPause() --> onStop()，进入停止状态
+	3.Activity返回前台：onRestart() --> onStart() --> onResume(),再次回到运行状态
+	4.Activity退居后，且系统内存不足，系统会杀死这个后台状态的Activity(此时这个Activity引用仍然处在任务栈中，只有这个时候u引用指向的对象已经为null)，若再次回到这个Activity，则会重新走一次Activity的初始化生命周期
+	5.锁屏：onPause() --> onStop()
+	6.解锁：onStart() --> onResume()
+![](http://thumbnail0.baidupcs.com/thumbnail/64237df36a973c99a027cf9e6471c7e2?fid=3542265707-250528-60324785275619&time=1495702800&rt=sh&sign=FDTAER-DCb740ccc5511e5e8fedcff06b081203-%2FoWnVtgp43aYbRS9Xu%2B8vvZHojk%3D&expires=8h&chkv=0&chkbd=0&chkpc=&dp-logid=3356234180327777362&dp-callid=0&size=c710_u400&quality=100)
