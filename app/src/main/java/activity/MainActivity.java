@@ -20,6 +20,7 @@ import fragment.ClassifyFragment;
 import fragment.CleanFragment;
 import fragment.IndexFragment;
 import fragment.MeFragment;
+import utils.L;
 
 public class MainActivity extends FragmentActivity implements View.OnClickListener {
 
@@ -35,7 +36,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         setContentView(R.layout.activity_main);
         mContext = this;
         initView();
-
+        L.isDebug = true;
         FragmentPagerItems pagerItems = new FragmentPagerItems(this);
         pagerItems.add(FragmentPagerItem.of("首页", IndexFragment.class));
         pagerItems.add(FragmentPagerItem.of("分类", ClassifyFragment.class));

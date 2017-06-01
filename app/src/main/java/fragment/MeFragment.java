@@ -1,5 +1,7 @@
 package fragment;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
@@ -13,6 +15,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -36,6 +40,7 @@ public class MeFragment extends Fragment {
     private LinearLayout me_ll_anim;
     private ImageView me_iv_share;
     private ImageView me_iv_d_anim;
+    private ImageView me_iv_t_anim;
 
     private ScreenService screenService;
     private ProgressBar mProgressBar;
@@ -47,8 +52,8 @@ public class MeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_me, null);
 
-        Intent intent = new Intent(getContext(),ScreenService.class);
-        getActivity().bindService(intent,connection,getActivity().BIND_AUTO_CREATE);
+        Intent intent = new Intent(getContext(), ScreenService.class);
+        getActivity().bindService(intent, connection, getActivity().BIND_AUTO_CREATE);
 
         me_qq_qun = (RelativeLayout) view.findViewById(R.id.me_ll_qq_qun);
         me_qq_qun.setOnClickListener(new View.OnClickListener() {
@@ -77,6 +82,15 @@ public class MeFragment extends Fragment {
                 me_iv_d_anim.setImageResource(R.drawable.animation_list);
                 animationDrawable = (AnimationDrawable) me_iv_d_anim.getDrawable();
                 animationDrawable.start();
+                Toast.makeText(getContext(),"逐帧动画 Drawable",Toast.LENGTH_SHORT).show();
+            }
+        });
+        me_iv_t_anim = (ImageView) view.findViewById(R.id.me_iv_t_anim);
+        me_iv_t_anim.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                animation(me_iv_t_anim);
+                Toast.makeText(getContext(),"属性动画 Property",Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -110,7 +124,7 @@ public class MeFragment extends Fragment {
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder service) {
             //返回一个ScreenService对象
-            screenService = ((ScreenService.MsgBinder)service).getSService();
+            screenService = ((ScreenService.MsgBinder) service).getSService();
             //注册回调接口来接受下载进度变化
             screenService.setOnProgressListener(new OnProgressListener() {
                 @Override
@@ -126,6 +140,18 @@ public class MeFragment extends Fragment {
 
         }
     };
+
+    //控制View x y 拉伸还原
+    public void animation(final View view) {
+        //rotationX scaleX
+//        ObjectAnimator animator = ObjectAnimator.ofFloat(view, "scaleX", 1f, 2f, 1f).setDuration(2000).start();
+        ObjectAnimator animatorX = ObjectAnimator.ofFloat(view, "scaleX", 1f, 2f, 1f);
+        ObjectAnimator animatorY = ObjectAnimator.ofFloat(view, "scaleY", 1f, 2f, 1f);
+        AnimatorSet set = new AnimatorSet();
+        set.play(animatorX).with(animatorY);
+        set.setDuration(3000).start();
+
+    }
 
     @Override
     public void onDestroy() {

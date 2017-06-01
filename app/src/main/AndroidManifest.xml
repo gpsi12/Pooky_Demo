@@ -16,6 +16,7 @@
         </activity>
 
         <activity android:name="activity.MainActivity"/>
+        <activity android:name="activity.LifecycleAct"/>
         <service android:name="service.ScreenService">
             <intent-filter>
                 <action android:name="com.pooky.demo.MSG_ACTION"/>
