@@ -16,7 +16,12 @@
         </activity>
 
         <activity android:name="activity.MainActivity"/>
-        <activity android:name="activity.LifecycleAct"/>
+
+        <!-- android:configChanges="orientation|keyboard"代码横屏 -->
+        <!-- android:theme="@android:style/Theme.NoTitleBar.Fullscreen"去掉标题栏和任务栏 -->
+        <activity android:name="activity.LifecycleAct"
+            android:screenOrientation="landscape"/>
+
         <service android:name="service.ScreenService">
             <intent-filter>
                 <action android:name="com.pooky.demo.MSG_ACTION"/>

@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    >
 
     <RelativeLayout
         android:id="@+id/bar"
@@ -48,8 +49,8 @@
                 android:id="@+id/me_ll_qq_qun"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:paddingLeft="@dimen/x30"
-                android:background="#CDCDCD">
+                android:background="#CDCDCD"
+                android:paddingLeft="@dimen/x30">
 
                 <ImageView
                     android:id="@+id/ll_iv_qqun"
@@ -60,22 +61,22 @@
                     android:background="@mipmap/qq_qun" />
 
                 <TextView
+                    android:id="@+id/textView2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@id/ll_iv_qqun"
-                    android:text="企鹅群"
-                    android:id="@+id/textView2" />
+                    android:text="企鹅群" />
 
                 <ImageView
+                    android:id="@+id/imageView"
                     android:layout_width="@dimen/x30"
                     android:layout_height="@dimen/x30"
-                    android:layout_marginRight="@dimen/x30"
-                    android:background="@mipmap/arrow"
-                    android:layout_alignTop="@+id/textView2"
-                    android:layout_alignParentRight="true"
                     android:layout_alignParentEnd="true"
-                    android:id="@+id/imageView" />
+                    android:layout_alignParentRight="true"
+                    android:layout_alignTop="@+id/textView2"
+                    android:layout_marginRight="@dimen/x30"
+                    android:background="@mipmap/arrow" />
 
             </RelativeLayout>
 
@@ -88,8 +89,8 @@
                 android:id="@+id/me_ll_service"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:paddingLeft="@dimen/x30"
-                android:background="#CDCDCD">
+                android:background="#CDCDCD"
+                android:paddingLeft="@dimen/x30">
 
                 <ImageView
                     android:id="@+id/ll_iv_service"

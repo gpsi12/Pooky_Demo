@@ -1,6 +1,8 @@
 package activity;
 
 import android.app.Activity;
+import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 
@@ -10,15 +12,16 @@ import utils.L;
 
 /**
  * 类描述：观察生命周期
- * Created by Gpsi on 2017-06-01.
+ * Created by Gpsi on 2017-06-12.
  */
 
 public class LifecycleAct extends Activity {
 
+    //, persistentState
     @Override
-    public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
-        super.onCreate(savedInstanceState, persistentState);
-        L.i("onCreate .");
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+//        L.i("onCreate .");
         setContentView(R.layout.activity_lifecycle);
     }
 
@@ -39,8 +42,19 @@ public class LifecycleAct extends Activity {
     //Activity创建或者从被覆盖、后台重新回到前台时被调用
     @Override
     protected void onResume() {
+        //设置横屏
+/*        if (getRequestedOrientation()!= ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE){
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        }*/
         super.onResume();
         L.i("onResume .");
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        L.i("onConfigurationChanged .");
+
     }
 
     //Activity窗口获得或失去焦点时被调用,在onResume之后或onPause之后
