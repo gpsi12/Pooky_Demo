@@ -160,7 +160,7 @@
 	2.AIDL的方式
 	3.Messenger的方式
 	4.利用ContentProvider
-	5.Socket
+	5.Socket 
 	6.基于文件共享的方式
 # 二十五.RecyclerView和ListView的异同 #
 	1.ViewHolder是用来保存视图引用的类，无论是ListView或是RecyclerView，只不过在ListView中，ViewHolder需要自己来定义，并且这只是一种推荐的使用方式，不适用也可以，只不过不适用ViewHolder的话，ListView每次getView的时候会调用findViewByid(int)，这将导致ListView性能战士迟缓，而在RecyclerView中使用RecyclerView.ViewHolder则变成了必须，尽管实现起来稍显复杂，但它却解决了ListView面临的上述不适用自定义ViewHolder所面临的问题
