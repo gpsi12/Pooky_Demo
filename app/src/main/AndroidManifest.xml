@@ -15,16 +15,19 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="activity.MainActivity"/>
+        <activity
+            android:name="activity.MainActivity"
+            android:configChanges="orientation|keyboardHidden|navigation" />
 
         <!-- android:configChanges="orientation|keyboard"代码横屏 -->
         <!-- android:theme="@android:style/Theme.NoTitleBar.Fullscreen"去掉标题栏和任务栏 -->
-        <activity android:name="activity.LifecycleAct"
-            android:screenOrientation="landscape"/>
+        <activity
+            android:name="activity.LifecycleAct"
+            android:screenOrientation="landscape" />
 
         <service android:name="service.ScreenService">
             <intent-filter>
-                <action android:name="com.pooky.demo.MSG_ACTION"/>
+                <action android:name="com.pooky.demo.MSG_ACTION" />
             </intent-filter>
         </service>
 

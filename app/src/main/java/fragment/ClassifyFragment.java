@@ -1,6 +1,7 @@
 package fragment;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -22,15 +23,14 @@ public class ClassifyFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_classify,null);
-
-
+        View view = inflater.inflate(R.layout.fragment_classify, null);
 
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getContext(), LifecycleAct.class);
-                startActivity(intent);
+//                Intent intent = new Intent(getContext(), LifecycleAct.class);
+//                startActivity(intent);
+                getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
             }
         });
         return view;

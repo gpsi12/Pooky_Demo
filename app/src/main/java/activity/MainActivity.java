@@ -1,6 +1,7 @@
 package activity;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -21,13 +22,14 @@ import fragment.CleanFragment;
 import fragment.IndexFragment;
 import fragment.MeFragment;
 import utils.L;
+import widget.BottomView;
 
 public class MainActivity extends FragmentActivity implements View.OnClickListener {
 
     private ViewPager mViewPager;
     private Context mContext;
-    private ImageView iv_index, iv_classify, iv_mv, iv_me;
     private long mPressedTime = 0;
+    private BottomView bv_main;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,52 +70,25 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     private void initView() {
         mViewPager = (ViewPager) findViewById(R.id.viewpager);
-
-        iv_index = (ImageView) findViewById(R.id.iv_index);
-        iv_index.setOnClickListener(this);
-        iv_index.setImageResource(R.drawable.ic_bottom_index_enabled);
-        iv_classify = (ImageView) findViewById(R.id.iv_classify);
-        iv_classify.setOnClickListener(this);
-        iv_mv = (ImageView) findViewById(R.id.iv_mv);
-        iv_mv.setOnClickListener(this);
-        iv_me = (ImageView) findViewById(R.id.iv_me);
-        iv_me.setOnClickListener(this);
+        bv_main = (BottomView) findViewById(R.id.bv_main);
+        bv_main.setOnPageSelectListener(new BottomView.IOnPageSelectedListener() {
+            @Override
+            public void onPageSelect(int index) {
+                mViewPager.setCurrentItem(index);
+            }
+        });
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.iv_index:
-                mViewPager.setCurrentItem(0);
-                iv_index.setImageResource(R.drawable.ic_bottom_index_enabled);
-                iv_classify.setImageResource(R.drawable.ic_bottom_class_disabled);
-                iv_mv.setImageResource(R.drawable.ic_bottom_mv_disabled);
-                iv_me.setImageResource(R.drawable.ic_bottom_me_disabled);
-                break;
-            case R.id.iv_classify:
-                mViewPager.setCurrentItem(1);
-                iv_index.setImageResource(R.drawable.ic_bottom_index_disabled);
-                iv_classify.setImageResource(R.drawable.ic_bottom_class_enabled);
-                iv_mv.setImageResource(R.drawable.ic_bottom_mv_disabled);
-                iv_me.setImageResource(R.drawable.ic_bottom_me_disabled);
-                break;
-            case R.id.iv_mv:
-                mViewPager.setCurrentItem(2);
-                iv_index.setImageResource(R.drawable.ic_bottom_index_disabled);
-                iv_classify.setImageResource(R.drawable.ic_bottom_class_disabled);
-                iv_mv.setImageResource(R.drawable.ic_bottom_mv_enabled);
-                iv_me.setImageResource(R.drawable.ic_bottom_me_disabled);
-                break;
-            case R.id.iv_me:
-                mViewPager.setCurrentItem(3);
-                iv_index.setImageResource(R.drawable.ic_bottom_index_disabled);
-                iv_classify.setImageResource(R.drawable.ic_bottom_class_disabled);
-                iv_mv.setImageResource(R.drawable.ic_bottom_mv_disabled);
-                iv_me.setImageResource(R.drawable.ic_bottom_me_enabled);
-                break;
-            default:
-                break;
         }
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        mViewPager.getCurrentItem();
     }
 
     @Override
@@ -133,6 +108,4 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         }
         return super.onKeyDown(keyCode, event);
     }
-
-
 }
