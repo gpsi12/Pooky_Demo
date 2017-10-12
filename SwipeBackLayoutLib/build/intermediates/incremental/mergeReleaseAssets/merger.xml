@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="3"><dataSet config="main"><source path="F:\PookyProject\Demo\SwipeBackLayoutLib\assets"/><source path="F:\PookyProject\Demo\SwipeBackLayoutLib\build\generated\assets\shaders\release"/></dataSet><dataSet config="release"><source path="F:\PookyProject\Demo\SwipeBackLayoutLib\build-types\release\assets"/></dataSet></merger>

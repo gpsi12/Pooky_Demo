@@ -27,6 +27,7 @@ import com.pooky.demo.R;
 
 import service.OnProgressListener;
 import service.ScreenService;
+import utils.ToastUtil;
 
 /**
  * 类描述：我的
@@ -41,6 +42,7 @@ public class MeFragment extends Fragment {
     private ImageView me_iv_share;
     private ImageView me_iv_d_anim;
     private ImageView me_iv_t_anim;
+    private ImageView me_iv_p_anim;
 
     private ScreenService screenService;
     private ProgressBar mProgressBar;
@@ -82,7 +84,7 @@ public class MeFragment extends Fragment {
                 me_iv_d_anim.setImageResource(R.drawable.animation_list);
                 animationDrawable = (AnimationDrawable) me_iv_d_anim.getDrawable();
                 animationDrawable.start();
-                Toast.makeText(getContext(),"逐帧动画 Drawable",Toast.LENGTH_SHORT).show();
+                ToastUtil.showDIYToast("逐帧动画 Drawable");
             }
         });
         me_iv_t_anim = (ImageView) view.findViewById(R.id.me_iv_t_anim);
@@ -90,7 +92,14 @@ public class MeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 animation(me_iv_t_anim);
-                Toast.makeText(getContext(),"属性动画 Property",Toast.LENGTH_SHORT).show();
+                ToastUtil.showDIYToast("属性动画 Property");
+            }
+        });
+        me_iv_p_anim = (ImageView) view.findViewById(R.id.me_iv_p_anim);
+        me_iv_p_anim.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ToastUtil.showDIYToast("未添加");
             }
         });
 
@@ -150,7 +159,7 @@ public class MeFragment extends Fragment {
         AnimatorSet set = new AnimatorSet();
         set.play(animatorX).with(animatorY);
         set.setDuration(3000).start();
-
+        ToastUtil.showToast("set.setDuration(3000).start();");
     }
 
     @Override
