@@ -143,8 +143,7 @@ public class SplashActivity extends Activity implements View.OnClickListener {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-//                loader.loadImage(url,iv_splash,R.mipmap.splash);
-                loader.loadBitmap(url,iv_splash);
+                loader.loadImage(url,iv_splash,R.mipmap.splash);
 //                ToastUtil.showDIYToast(reponse);
             }
         });
