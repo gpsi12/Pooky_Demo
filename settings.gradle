@@ -1,1 +1,1 @@
-include ':app', ':YoumiFramework', ':SwipeBackLayoutLib', ':YoumiResource'
+include ':app', ':PookyImageLoader'

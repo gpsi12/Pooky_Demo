@@ -8,13 +8,18 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.example.pookyimageloader.ImageLoader;
+import com.google.gson.Gson;
 import com.pooky.demo.R;
 
+import java.io.IOException;
+
 import bean.SplashBean;
-import cn.youmi.framework.http.AbstractRequest;
-import cn.youmi.framework.http.GetRequest;
-import cn.youmi.framework.http.parsers.GsonParser;
-import cn.youmi.framework.util.ImageLoader;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
+import utils.HttpUtil;
+import utils.L;
 import utils.MyApplication;
 import utils.ToastUtil;
 
@@ -25,20 +30,23 @@ import utils.ToastUtil;
 
 public class SplashActivity extends Activity implements View.OnClickListener {
     private final int SPLASH_DISPLAY_LENGHT = 22000;
+    String SPLASH_URL = "http://i.v.youmi.cn/ClientApi/huodonglist/?pagenum=8&inprogress=%s&p=%s";
+    String SPLASH_URL1 = "https://raw.githubusercontent.com/gpsi12/Pooky_Demo/master/Splash.json";
     private Button btn_splash_close;
     private ImageView iv_splash;
-    private ImageLoader mImageLoader;
     private String SPLASH_INTRODUCE;
+
+    private  ImageLoader loader;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        mImageLoader = new ImageLoader(this);
+        loader = new ImageLoader(MyApplication.getAppContext());
         iv_splash = (ImageView) findViewById(R.id.iv_splash);
         btn_splash_close = (Button) findViewById(R.id.btn_splash_close);
         btn_splash_close.setOnClickListener(this);
-
         loadSplash();
 /*        new Handler().postDelayed(new Runnable() {
             @Override
@@ -78,27 +86,69 @@ public class SplashActivity extends Activity implements View.OnClickListener {
      * 加载闪屏数据
      */
     private void loadSplash() {
-        String SPLASH_URL = "https://raw.githubusercontent.com/gpsi12/Pooky_Demo/master/Splash.json";
+
+        String VIDEO_TUIJIAN = "http://v.youmi.cn/api8/index";
 //        mImageLoader.loadImage(SPLASH_URL,iv_splash,R.mipmap.splash);
-        GetRequest<SplashBean> request = new GetRequest<>(
-                SPLASH_URL, GsonParser.class,
-                SplashBean.class,
-                splashActionListener);
-        request.go();
+//        GetRequest<SplashBean> request = new GetRequest<>(
+//                SPLASH_URL, GsonParser.class, SplashBean.class, splashActionListener);
+//        request.go();
+
+        sendRequestWithOkHttp();
+
+
     }
 
-    private AbstractRequest.Listener<SplashBean> splashActionListener = new AbstractRequest.Listener<SplashBean>() {
-        @Override
-        public void onResult(AbstractRequest<SplashBean> request, SplashBean splashBean) {
-            mImageLoader.loadImage(splashBean.getImageUrl(), iv_splash, R.mipmap.splash);
-//            SPLASH_INTRODUCE = splashBean.getIntroduce();
-        }
+    private void sendRequestWithOkHttp(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                //在子线程中执行Http请求，并将最终的请求结果回调到okhttp3.Callback中
+                HttpUtil.sendOKHttpRequest(SPLASH_URL1, new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        //在这里进行异常情况处理
+                    }
 
-        @Override
-        public void onError(AbstractRequest<SplashBean> requet, int statusCode, String body) {
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        String respomseData = response.body().string();
+                        L.e(respomseData);
+                        parseJSONWithGSON(respomseData);
+                        //添加到UI
+//                        showResponse(respomseData.toString());
 
-        }
-    };
+                    }
+                });
+            }
+        }).start();
+    }
+
+    private void parseJSONWithGSON(String jsonData){
+        //使用轻量级的Gson解析得到的json
+        Gson gson = new Gson();
+        L.e("第一步  +  " + jsonData);
+//        ArrayList<RecommendBean.RBean.HuodongBean> splashBeen = gson.fromJson(jsonData,new TypeToken<ArrayList<RecommendBean.RBean.HuodongBean>>(){}.getType());
+        SplashBean huodongBean = gson.fromJson(jsonData,SplashBean.class);
+        L.e("第二步  +  " + huodongBean.getIntroduce());
+        showResponse(huodongBean.getImageUrl());
+//        for (RecommendBean.RBean.HuodongBean splashBean : splashBeen){
+//            L.e(splashBean.getTitle());
+//            L.e(splashBean.getUrl().toString());
+//            L.e(splashBean.getContent());
+//        }
+    }
+
+    private void showResponse(final String url){
+        //在子线程中更新UI
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+//                loader.loadImage(url,iv_splash,R.mipmap.splash);
+                loader.loadBitmap(url,iv_splash);
+//                ToastUtil.showDIYToast(reponse);
+            }
+        });
+    }
 
     @Override
     public void onClick(View view) {
@@ -109,7 +159,7 @@ public class SplashActivity extends Activity implements View.OnClickListener {
                 gotoMainActivity();
                 break;
             case R.id.iv_splash:
-                ToastUtil.showDIYToast(SPLASH_INTRODUCE);
+//                ToastUtil.showDIYToast(SPLASH_INTRODUCE);
         }
     }
 }

@@ -7,11 +7,11 @@ import com.google.gson.annotations.SerializedName;
  * Created by Pooky on 2017/10/12.
  */
 
-public class SplashBean extends BaseGsonBeans{
+public class SplashBean extends BaseGsonBeans {
 
     /**
      * id : 2828
-     * imageUrl : http://www.aw13.cn/public/upload/photo/20170722/5973064fe7205.jpg
+     * imageUrl : http://www.jpg
      * introduce :  闪屏广告介绍
      */
     @SerializedName("id")

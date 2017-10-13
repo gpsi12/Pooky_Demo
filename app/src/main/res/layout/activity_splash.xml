@@ -7,7 +7,7 @@
         android:id="@+id/iv_splash"
         android:layout_width="@dimen/x720"
         android:layout_height="@dimen/y1280"
-        android:src="@mipmap/splash"
+        android:background="@mipmap/splash"
         />
 <Button
     android:id="@+id/btn_splash_close"
