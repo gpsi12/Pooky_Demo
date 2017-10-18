@@ -24,19 +24,19 @@ import utils.MyApplication;
 import utils.ToastUtil;
 
 /**
- * 类描述：
+ * 类描述：闪屏界面
  * Created by Gpsi on 2017-04-13.
  */
 
 public class SplashActivity extends Activity implements View.OnClickListener {
     private final int SPLASH_DISPLAY_LENGHT = 22000;
     String SPLASH_URL = "http://i.v.youmi.cn/ClientApi/huodonglist/?pagenum=8&inprogress=%s&p=%s";
-    String SPLASH_URL1 = "https://raw.githubusercontent.com/gpsi12/Pooky_Demo/master/Splash.json";
+    String SPLASH_URL1 = "http://192.168.1.106:8080/pooky/Splash.json";
     private Button btn_splash_close;
     private ImageView iv_splash;
     private String SPLASH_INTRODUCE;
 
-    private  ImageLoader loader;
+    private ImageLoader loader;
 
 
     @Override
@@ -86,7 +86,6 @@ public class SplashActivity extends Activity implements View.OnClickListener {
      * 加载闪屏数据
      */
     private void loadSplash() {
-
         String VIDEO_TUIJIAN = "http://v.youmi.cn/api8/index";
 //        mImageLoader.loadImage(SPLASH_URL,iv_splash,R.mipmap.splash);
 //        GetRequest<SplashBean> request = new GetRequest<>(
@@ -98,7 +97,7 @@ public class SplashActivity extends Activity implements View.OnClickListener {
 
     }
 
-    private void sendRequestWithOkHttp(){
+    private void sendRequestWithOkHttp() {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -106,7 +105,8 @@ public class SplashActivity extends Activity implements View.OnClickListener {
                 HttpUtil.sendOKHttpRequest(SPLASH_URL1, new Callback() {
                     @Override
                     public void onFailure(Call call, IOException e) {
-                        //在这里进行异常情况处理
+                        //在这里进行异常情况处理、
+                        L.e("错误" + e.toString());
                     }
 
                     @Override
@@ -123,14 +123,13 @@ public class SplashActivity extends Activity implements View.OnClickListener {
         }).start();
     }
 
-    private void parseJSONWithGSON(String jsonData){
+    private void parseJSONWithGSON(String jsonData) {
         //使用轻量级的Gson解析得到的json
         Gson gson = new Gson();
         L.e("第一步  +  " + jsonData);
-//        ArrayList<RecommendBean.RBean.HuodongBean> splashBeen = gson.fromJson(jsonData,new TypeToken<ArrayList<RecommendBean.RBean.HuodongBean>>(){}.getType());
-        SplashBean huodongBean = gson.fromJson(jsonData,SplashBean.class);
-        L.e("第二步  +  " + huodongBean.getIntroduce());
-        showResponse(huodongBean.getImageUrl());
+        SplashBean splashBean = gson.fromJson(jsonData, SplashBean.class);
+        L.e("第二步  +  " + splashBean.getIntroduce());
+        showResponse(splashBean.getImageUrl());
 //        for (RecommendBean.RBean.HuodongBean splashBean : splashBeen){
 //            L.e(splashBean.getTitle());
 //            L.e(splashBean.getUrl().toString());
@@ -138,12 +137,13 @@ public class SplashActivity extends Activity implements View.OnClickListener {
 //        }
     }
 
-    private void showResponse(final String url){
+    private void showResponse(final String url) {
         //在子线程中更新UI
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                loader.loadImage(url,iv_splash,R.mipmap.splash);
+                loader.loadImage(url, iv_splash, R.mipmap.splash);
+//                iv_splash.setImageURI(Uri.parse(url));
 //                ToastUtil.showDIYToast(reponse);
             }
         });
